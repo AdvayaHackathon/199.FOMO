@@ -57,15 +57,15 @@ def get_weather_condition(latitude, longitude, api_key):
         print(f"Error accessing key in JSON: {e}")
         return None
 
-if __name__ == "__main__":
-    api_key = "b0f411cd84d24d57bf170954251104"  # Replace with your actual API key
-    latitude = 12.971581
-    longitude = 80.043419
+# if __name__ == "__main__":
+#     api_key = "b0f411cd84d24d57bf170954251104"  # Replace with your actual API key
+#     latitude = 12.971581
+#     longitude = 80.043419
 
-    weather_conditions = get_weather_condition(latitude, longitude, api_key)
+#     weather_conditions = get_weather_condition(latitude, longitude, api_key)
 
-    if weather_conditions:
-        print(f"Is it raining? {weather_conditions['is_raining']}")
-        print(f"Is it too sunny? {weather_conditions['is_too_sunny']}")
-    else:
-        print("Could not retrieve weather information.")
+#     if weather_conditions:
+#         print(f"Is it raining? {weather_conditions['is_raining']}")
+#         print(f"Is it too sunny? {weather_conditions['is_too_sunny']}")
+#     else:
+#         print("Could not retrieve weather information.")

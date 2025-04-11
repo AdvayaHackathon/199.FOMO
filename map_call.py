@@ -40,7 +40,7 @@ def get_place_details(place_id, api_key):
         print("Error decoding JSON response.")
         return None
 
-def text_search_places(query, api_key, location=None, radius=5000):
+def text_search_places(query, api_key, location=None, radius=5000, max_results=5):
     """
     Perform a Google Places Text Search and return results.
 
@@ -71,29 +71,31 @@ def text_search_places(query, api_key, location=None, radius=5000):
         return []
 
     results = []
-    for place in data.get("results", []):
+    for place in data.get("results", [])[:max_results]:
         # print(f"Place: {place}")
-        review_count = get_place_details(place.get("place_id"), api_key)
+        # review_count = get_place_details(place.get("place_id"), api_key)
         results.append({
             "name": place.get("name"),
             "address": place.get("formatted_address"),
             "rating": place.get("rating"),
             "place_id": place.get("place_id"),
-            "review_count": review_count
+            "review_count": place.get("user_ratings_total"),
+            "latitude": place.get("geometry").get("location").get("lat"),
+            "longitude": place.get("geometry").get("location").get("lng")
         })
 
     return results
 
-API_KEY = "AIzaSyD71vUXnxhniEodZmfGxfbEIiDTexyKCjc"
+# API_KEY = "AIzaSyD71vUXnxhniEodZmfGxfbEIiDTexyKCjc"
 
-# Search with location (e.g., for 'pizza' near NYC)
-results = text_search_places("bowling alleys near me Andheri West", API_KEY, location=(19.136326, 72.827660))
+# # Search with location (e.g., for 'pizza' near NYC)
+# results = text_search_places("bowling alleys near me Andheri West", API_KEY, location=(13.0878, 80.2785))
 
-# Search without location
-# results = text_search_places("Eiffel Tower", API_KEY)
+# # Search without location
+# # results = text_search_places("Eiffel Tower", API_KEY)
 
-for i, place in enumerate(results, 1):
-    print(f"{i}. {place['name']} ({place['rating']}⭐)")
-    print(f"   Address: {place['address']}")
-    print(f"   Place ID: {place['place_id']}\n")
-    print(f"   Review count: {place['review_count']}")
+# for i, place in enumerate(results, 1):
+#     print(f"{i}. {place['name']} ({place['rating']}⭐)")
+#     print(f"   Address: {place['address']}")
+#     print(f"   Place ID: {place['place_id']}\n")
+#     print(f"   Review count: {place['review_count']}")
